@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2024", // Compila para ES2024, com recursos modernos de JS
+    "module": "ES2022", // Usa sistema de módulos ECMAScript moderno
+    "moduleResolution": "node", // Resolves módulos como Node.js (import/require)
+    "outDir": "./dist", // Pasta de saída para JS compilado
+    "rootDir": "./src", // Pasta raiz dos arquivos fonte
+    "baseUrl": "./src", // Base para resolver imports absolutos (ex: import x from 'utils/x')
+    "esModuleInterop": true, // Facilita importação de módulos CommonJS
+    "allowSyntheticDefaultImports": true, // Permite imports default em módulos que não têm default export
+    "allowJs": true, // Permite arquivos JS no projeto
+    "checkJs": false, // Pode ativar se quiser checar erros em JS também
+    "strict": true, // Ativa todas verificações estritas do TS
+    "noImplicitAny": true, // Garante que você não deixe variáveis sem tipo definido
+    "noUnusedLocals": true, // Avisa se você declarar variáveis não usadas
+    "noUnusedParameters": true, // Avisa se parâmetros de função não forem usados
+    "noFallthroughCasesInSwitch": true, // Evita erro em switch case sem break
+    "skipLibCheck": true, // Ignora checagem de arquivos de definição de libs
+    "forceConsistentCasingInFileNames": true, // Garante consistência em case de imports
+    "resolveJsonModule": true, // Permite importar arquivos JSON diretamente
+    "isolatedModules": true, // Ajuda a garantir que cada arquivo pode ser compilado isoladamente (bom para Babel etc)
+    "incremental": true // Ativa compilação incremental para builds mais rápidos
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}
