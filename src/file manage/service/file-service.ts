@@ -1,9 +1,10 @@
 import { IFile } from 'file manage/interfaces/IFile';
 import { fileRepository } from 'file manage/repository/file.repository';
+import { rabbitMQService } from './rabbitmq.service';
 
 class FileService {
   public async saveFile(file: Express.Multer.File): Promise<IFile> {
-    return await fileRepository.save({
+    const savedFile = await fileRepository.save({
       filename: file.filename,
       originalname: file.originalname,
       path: file.path,
@@ -11,6 +12,20 @@ class FileService {
       size: file.size,
       status: 'PENDING',
     });
+
+    if (!rabbitMQService['channel']) {
+      await new Promise<void>((resolve, reject) => {
+        rabbitMQService.connect('amqp://localhost').then(resolve).catch(reject);
+      });
+    }
+
+    rabbitMQService.sendToQueue('file_queue', {
+      id: savedFile._id,
+      filename: savedFile.filename,
+      path: savedFile.path,
+    });
+
+    return savedFile;
   }
 
   public async listFiles(): Promise<IFile[]> {

@@ -1,4 +1,5 @@
 import express from 'express';
+import { rabbitMQService } from 'file manage/service/rabbitmq.service';
 import { router } from './router';
 import { MongoConnection } from './database/mongo-connection';
 
@@ -11,6 +12,8 @@ class Main {
 
   public async init(port: number) {
     await MongoConnection.getInstance().connect();
+
+    await rabbitMQService.connect(process.env.RABBITMQ_URL);
 
     this.middleware();
     this.routes();
