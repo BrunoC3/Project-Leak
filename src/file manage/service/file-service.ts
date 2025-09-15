@@ -1,26 +1,28 @@
-import fs from 'fs';
-import path from 'path';
+import { IFile } from 'file manage/interfaces/IFile';
+import { fileRepository } from 'file manage/repository/file.repository';
 
 class FileService {
-  private uploadDir = path.resolve('uploads');
-
-  constructor() {
-    if (!fs.existsSync(this.uploadDir)) {
-      fs.mkdirSync(this.uploadDir, { recursive: true });
-    }
-  }
-
-  public async save(file: Express.Multer.File) {
-    const filePath = path.join(this.uploadDir, file.originalname);
-
-    await fs.promises.writeFile(filePath, file.buffer); // se memoryStorage
-
-    return {
-      filename: file.originalname,
-      path: filePath,
+  public async saveFile(file: Express.Multer.File): Promise<IFile> {
+    return await fileRepository.save({
+      filename: file.filename,
+      originalname: file.originalname,
+      path: file.path,
       mimetype: file.mimetype,
       size: file.size,
-    };
+      status: 'PENDING',
+    });
+  }
+
+  public async listFiles(): Promise<IFile[]> {
+    return await fileRepository.findAll();
+  }
+
+  public async getFile(id: string): Promise<IFile | null> {
+    return await fileRepository.findById(id);
+  }
+
+  public async deleteFile(id: string): Promise<void> {
+    await fileRepository.deleteById(id);
   }
 }
 

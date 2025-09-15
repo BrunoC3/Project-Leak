@@ -4,20 +4,14 @@ import { fileService } from 'file manage/service/file-service';
 class FileManageController {
   public async create(req: Request, res: Response) {
     try {
-      let savedFile = null;
-      if (req.file) {
-        savedFile = {
-          filename: req.file.filename,
-          originalname: req.file.originalname,
-          path: req.file.path,
-          mimetype: req.file.mimetype,
-          size: req.file.size,
-        };
+      if (!req.file) {
+        return res.status(400).json({ message: 'Nenhum arquivo enviado!' });
       }
 
+      const savedFile = await fileService.saveFile(req.file);
+
       return res.status(201).json({
-        message: `Deu bom!`,
-        data: fileService,
+        message: 'Arquivo enviado e salvo no banco!',
         file: savedFile,
       });
     } catch (err: any) {
