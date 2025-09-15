@@ -1,4 +1,3 @@
-// src/services/rabbitmq.service.ts
 import amqp from 'amqplib/callback_api';
 
 class RabbitMQService {

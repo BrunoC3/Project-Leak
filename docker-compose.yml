@@ -27,6 +27,19 @@ services:
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
 
+  minio:
+    image: minio/minio
+    container_name: minio
+    ports:
+      - '9000:9000'
+      - '9090:9090'
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9090"
+    volumes:
+      - minio-data:/data
 volumes:
   mongo-data:
   rabbitmq-data:
+  minio-data:

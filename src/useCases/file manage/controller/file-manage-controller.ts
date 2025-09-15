@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { fileService } from 'file manage/service/file-service';
+import { fileService } from '../service/file-service';
 
 class FileManageController {
   public async create(req: Request, res: Response) {
@@ -15,7 +15,10 @@ class FileManageController {
         file: savedFile,
       });
     } catch (err: any) {
-      console.log(err);
+      console.error(err);
+      return res
+        .status(500)
+        .json({ message: 'Erro ao salvar o arquivo', error: err.message || err });
     }
   }
 }

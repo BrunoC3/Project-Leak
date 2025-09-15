@@ -1,8 +1,8 @@
-import { IFile } from 'file manage/interfaces/IFile';
+import { IFile } from 'useCases/file manage/interfaces/IFile';
 import { Schema, model } from 'mongoose';
 
 const fileSchema = new Schema<IFile>({
-  filename: { type: String, required: true },
+  fileID: { type: String, required: true, unique: true },
   originalname: { type: String, required: true },
   path: { type: String, required: true },
   mimetype: { type: String, required: true },

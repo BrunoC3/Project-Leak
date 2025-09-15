@@ -1,5 +1,5 @@
 import express from 'express';
-import { rabbitMQService } from 'file manage/service/rabbitmq.service';
+import { rabbitMQService } from 'useCases/file manage/service/rabbitmq.service';
 import { router } from './router';
 import { MongoConnection } from './database/mongo-connection';
 

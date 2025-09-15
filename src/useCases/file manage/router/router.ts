@@ -1,10 +1,10 @@
 import { Router } from 'express';
+import multer from 'multer';
 import { fileManagerController } from '../controller/file-manage-controller';
-import { upload } from '../middlewares/upload';
 
 const router = Router();
+const upload = multer({ storage: multer.memoryStorage() });
 
-// rota com upload de arquivo
 router.post('/file', upload.single('file'), (req, res) => fileManagerController.create(req, res));
 
 // router.get('/file/:id', (req, res) => fileManagerController.read(req, res));
